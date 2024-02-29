@@ -5,7 +5,7 @@ import mysql.connector
 import mysql.connector.pooling
 import os
 
-conn=mysql.connector.pooling.MySQLConnectionPool(host=host,user=user,password=password,db=db,pool_name='DED',pool_size=25, pool_reset_session=True)
+conn=mysql.connector.pooling.MySQLConnectionPool(host='localhost',user='root',password="admin",db='yoga',pool_name='DED',pool_size=3, pool_reset_session=True)
 
 
 app.secret_key='guruji'
@@ -41,24 +41,20 @@ def register():
                 raise Exception
         except Exception as e:
             flash('user already existed')
+            print(e)
             return redirect(url_for('home'))
-        finally:
-            if mydb.is_connected():
-                mydb.close()
+
+
         else:
-            try:
-                mydb=conn.get_connection()
                 cursor = mydb.cursor(buffered=True)
                 cursor.execute('insert into register(first_name,last_name,phone,email,password,img) values(%s,%s,%s,%s,%s,%s)',[fname,lname,phone,email,password,filename])
                 mydb.commit()
                 cursor.close()
-            except Exception as e:
-                print(e)
-            finally:
-                if mydb.is_connected():
-                    mydb.close()
-            flash('Your Details has registered successfully')
-            return redirect(url_for('home'))
+        finally:
+            if mydb.is_connected():
+                mydb.close()
+        flash('Your Details has registered successfully')
+        return redirect(url_for('home'))
     return redirect(url_for('home'))
 @app.route('/login',methods=['GET','POST'])
 def login():
@@ -77,15 +73,17 @@ def login():
                 raise Exception
         except Exception as e:
             flash('username or password was incorrect')
+            print(e)
             return redirect(url_for('login'))
-        finally:
-            if mydb.is_connected():
-                mydb.close()
+
         else:
             session['user']=username
             if not session.get(username):
                 session[username]={}
             return redirect(url_for('home'))
+        finally:
+            if mydb.is_connected():
+                mydb.close()
     return redirect(url_for('home'))
 @app.route('/logout')
 def logout():
@@ -275,4 +273,6 @@ def adminregister():
             if mydb.is_connected():
                 mydb.close()
     return redirect(url_for('admin'))
-app.run(debug=True)
+
+if __name__=='__main__':
+    app.run(debug=True)
