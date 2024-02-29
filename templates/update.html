@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add </title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+        body {
+            background-color: khaki;
+        }
+        .btnstyle {
+            background-color:blue;
+            color:white;
+            padding:10px;
+            border-radius: 8px;
+            border:none;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<body>
+    
+    <form method="POST">
+        <div>
+            <h1>Update </h1>
+        </div>
+        <label>First_name</label>
+        <p><input type="text" name="fname" value="{{data[0]}}" required/></p>
+        <label>Last_name</label>
+        <p><input type="text" name="lname" value="{{data[1]}}" required/></p>
+        <label>Phone</label>
+        <p><input type="number" name="phone" value="{{data[2]}}" required/></p>
+        
+        <button class="btnstyle">Submit</button>
+    </form>
+    </form>
+</body>
+</html>
