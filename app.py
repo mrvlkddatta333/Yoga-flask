@@ -5,7 +5,7 @@ import mysql.connector
 import mysql.connector.pooling
 import os
 
-conn=mysql.connector.pooling.MySQLConnectionPool(host='localhost',user='root',password="admin",db='yoga',pool_name='DED',pool_size=3, pool_reset_session=True)
+conn=mysql.connector.pooling.MySQLConnectionPool(host='yoga.mysql.pythonanywhere-services.com',user='yoga',password="Codegnan@2018",db='yoga$yoga',pool_name='DED',pool_size=3, pool_reset_session=True)
 
 
 app.secret_key='guruji'
